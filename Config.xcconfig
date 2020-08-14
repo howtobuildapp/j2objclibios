@@ -1,0 +1,13 @@
+//
+//  Config.xcconfig
+//  msiosvm
+//
+//  Created by 张文 on 23/11/2017.
+//  Copyright © 2017 hxsc. All rights reserved.
+//
+Version = 1.0.0
+
+VMVersion = 1.0.0
+ServiceVersion = 1.0.0
+
+J2OBJC_HOME = /Users/zhangwen/Downloads/j2objc-2.0.4.1/dist

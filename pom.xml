@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <name>j2objclibios</name>
+    <groupId>com.github.howtobuildapp</groupId>
+    <artifactId>j2objclibios</artifactId>
+    <packaging>jar</packaging>
+    <version>${Version}</version>
+    <description>j2objclib iOS</description>
+    <url>https://github.com/howtobuildapp/j2objclibios</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.github.howtobuildapp</groupId>
+            <artifactId>libvm</artifactId>
+            <version>${VMVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.howtobuildapp</groupId>
+            <artifactId>libservice</artifactId>
+            <version>${ServiceVersion}</version>
+        </dependency>
+        
+    </dependencies>
+    
+    <licenses>
+        <license>
+            <name>BSD 2-Clause "Simplified" License</name>
+            <url>https://github.com/howtobuildapp/j2objclibios/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+    
+    <scm>
+        <connection>scm:git:https://github.com/howtobuildapp/j2objclibios.git</connection>
+        <developerConnection>scm:git:https://github.com/howtobuildapp/j2objclibios.git</developerConnection>
+        <url>https://github.com/howtobuildapp/j2objclibios.git</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <name>howtobuildapp</name>
+            <email>rosetown30@gmail.com</email>
+        </developer>
+    </developers>
+    
+    
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        
+        <repository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    
+	<build>
+	    <plugins>
+            
+			<plugin>
+			    <groupId>com.smoope.utils</groupId>
+			    <artifactId>j2objc-maven-plugin</artifactId>
+			    <version>1.1.4</version>
+			    <configuration>
+			        <j2objcPath>${J2OBJC_HOME}/j2objc</j2objcPath>
+					<useArc>true</useArc>
+	        		<noPackageDirectories>true</noPackageDirectories>
+                    <nullability>true</nullability>
+                    <prefixes>prefixes.properties</prefixes>
+                    <!-- <no-segmented-headers>true</no-segmented-headers>-->
+                    <!-- <no-wrapper-methods></no-wrapper-methods>-->
+                    <docComments>true</docComments>
+			        <!-- default value -->
+			        <sourcePath>${project.basedir}/javasrc</sourcePath>
+			        <!-- default value -->
+			        <d>${project.basedir}/j2objclibios</d>
+			    </configuration>
+			</plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <classifier>sources</classifier>
+                    <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                    <outputDirectory>${project.basedir}/javasrc</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>src-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <!-- use copy-dependencies instead if you don't want to explode the sources -->
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+		</plugins>
+	</build>
+</project>
